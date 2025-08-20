@@ -1,6 +1,7 @@
 # app.py  — safe and robust MineGuard search API
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 import faiss
@@ -108,6 +109,15 @@ except Exception as e:
 
 # ----- FastAPI app -----
 app = FastAPI(title="MineGuard API", version="0.1")
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 class QueryRequest(BaseModel):
     query: str

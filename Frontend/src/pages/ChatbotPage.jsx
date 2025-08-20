@@ -94,25 +94,30 @@ const ChatbotPage = () => {
     setLoading(true);
 
     try {
+
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCZnlsv63A_5hO1NSXS6-KQWZEZFd35Aok`,
+        'https://ptzzhq85-8000.inc1.devtunnels.ms/search',
         {
-          contents: [{
-            parts: [{ text: input }]
-          }]
+          query: input
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
+      console.log(response);
+      let aiResponse = "I didn't understand that";
+      if (Array.isArray(response.data?.results) && response.data.results.length > 0) {
+        // Find the result with the highest score
+        const best = response.data.results.reduce((max, curr) => curr.score > max.score ? curr : max, response.data.results[0]);
+        aiResponse = best.section || aiResponse;
+      } else if (response.data?.result || response.data?.answer) {
+        aiResponse = response.data.result || response.data.answer;
+      }
 
-      const aiResponse = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || 
-                        "I didn't understand that";
-      
       setMessages(prev => [...prev, { text: aiResponse, isUser: false }]);
-      
+
       // Update chat title with first message if it's the first exchange
       if (messages.length === 0) {
         const newTitle = input.length > 30 ? `${input.substring(0, 30)}...` : input;
