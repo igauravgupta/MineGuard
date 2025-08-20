@@ -54,9 +54,9 @@ The response should be in JSON format with the following structure:
     }
 
     // Send the request to the Google Gemini API
-    console.log("Using API Key:", "AIzaSyCZnlsv63A_5hO1NSXS6-KQWZEZFd35Aok");
+    console.log("Using API Key:", "AIzaSyDDoK7Th-xsp6YWWr75lho8NmuF5mIauKE");
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCZnlsv63A_5hO1NSXS6-KQWZEZFd35Aok`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDDoK7Th-xsp6YWWr75lho8NmuF5mIauKE`,
       requestBody,
       {
         headers: {
